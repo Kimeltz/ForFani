@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine & Imlek 3D Celebration</title>
+    <style>
+        :root {
+            /* Palette Warna Pastel */
+            --bg-color: #dbeafe; /* Biru Pastel Terang */
+            --card-bg: #e8f1ff;  /* Variasi Biru untuk Clay */
+            --primary-pink: #fbcfe8; /* Pink Pastel */
+            --accent-red: #9f4a4a;   /* Merah Gelap Pastel (seperti Angpao) */
+            --text-color: #5d6d7e;
+            --shadow-light: inset 6px 6px 10px rgba(255, 255, 255, 0.7), inset -6px -6px 10px rgba(0, 0, 0, 0.05), 8px 8px 16px rgba(166, 180, 200, 0.4);
+            --shadow-pressed: inset 4px 4px 8px rgba(166, 180, 200, 0.4), inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Claymorphism Container Style */
+        .clay-card {
+            background-color: var(--card-bg);
+            border-radius: 30px;
+            box-shadow: 20px 20px 60px #b8c6db, -20px -20px 60px #ffffff;
+            padding: 2rem;
+            margin: 1rem;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        h1, h2 {
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        /* Gambar Utama */
+        .hero-image {
+            width: 100%;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-light);
+            border: 4px solid #fff;
+        }
+
+        /* Navigasi Bawah */
+        .nav-bar {
+            position: fixed;
+            bottom: 20px;
+            display: flex;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .nav-btn {
+            border: none;
+            background: var(--primary-pink);
+            color: var(--accent-red);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
+        }
+
+        .nav-btn:active, .nav-btn.active {
+            transform: scale(0.95);
+            background: var(--accent-red);
+            color: white;
+        }
+
+        /* Halaman (Sections) */
+        section {
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s ease-in-out;
+            padding-bottom: 100px; /* Space for navbar */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        section.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Page 1: Game Angpao */
+        .game-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .choice-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            background-color: var(--accent-red);
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+        }
+        
+        .choice-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        #game-result {
+            margin-top: 15px;
+            font-weight: bold;
+            min-height: 24px;
+            color: var(--accent-red);
+        }
+
+        /* Page 2: Motivasi */
+        .quote-box {
+            font-style: italic;
+            color: #555;
+            background: #fff;
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: -30px; /* Overlap effect */
+            z-index: 10;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            width: 80%;
+        }
+
+        /* Page 3: Kartu Ucapan */
+        .greeting-card {
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            border: 2px solid var(--primary-pink);
+        }
+
+    </style>
+</head>
+<body>
+
+    <section id="page1" class="active">
+        <div class="clay-card">
+            <h2>🧧 Tebak Isi Angpao</h2>
+            <p>Pilih salah satu angpao di bawah ini. Jika beruntung, kamu akan mendapatkan pesan spesial!</p>
+            
+            <img src="Gemini_Generated_Image_6tyqn16tyqn16tyq.jpg" alt="Tiga Angpao Clay 3D" class="hero-image">
+            
+            <div class="game-buttons">
+                <button class="choice-btn" onclick="playGame(1)">1</button>
+                <button class="choice-btn" onclick="playGame(2)">2</button>
+                <button class="choice-btn" onclick="playGame(3)">3</button>
+            </div>
+            <p id="game-result">Klik nomor untuk memilih!</p>
+        </div>
+    </section>
+
+    <section id="page2">
+        <div class="clay-card">
+            <h2>🎓 Semangat Skripsian!</h2>
+            <img src="Gemini_Generated_Image_d2l6l2d2l6l2d2l6.jpg" alt="Meja Belajar Clay 3D" class="hero-image">
+            
+            <div class="quote-box">
+                "Revisian itu tanda sayang dosen pembimbing. Lelah boleh, nyerah jangan. Toga sudah menunggu!"
+            </div>
+            <br>
+            <p>Tarik napas, minum kopi, dan tulis satu paragraf lagi hari ini.</p>
+        </div>
+    </section>
+
+    <section id="page3">
+        <div class="clay-card greeting-card">
+            <h2>🏮 Gong Xi Fa Cai &<br>Happy Valentine 💖</h2>
+            <img src="Gemini_Generated_Image_gzhihngzhihngzhi.jpg" alt="Lampion Clay 3D" class="hero-image">
+            
+            <p>Semoga tahun ini penuh dengan keberuntungan, kemakmuran, dan kasih sayang yang manis seperti coklat.</p>
+            <p style="color: var(--accent-red); font-weight: bold;">Love & Luck, Always.</p>
+        </div>
+    </section>
+
+    <div class="nav-bar">
+        <button class="nav-btn active" onclick="showPage(1, this)">Game</button>
+        <button class="nav-btn" onclick="showPage(2, this)">Study</button>
+        <button class="nav-btn" onclick="showPage(3, this)">Wish</button>
+    </div>
+
+    <script>
+        // Logika Navigasi Halaman
+        function showPage(pageId, btnElement) {
+            // Sembunyikan semua section
+            document.querySelectorAll('section').forEach(sec => {
+                sec.classList.remove('active');
+                sec.style.display = 'none';
+            });
+            
+            // Tampilkan section yang dipilih
+            const selectedSection = document.getElementById('page' + pageId);
+            selectedSection.style.display = 'flex';
+            // Sedikit delay untuk memicu animasi CSS
+            setTimeout(() => selectedSection.classList.add('active'), 10);
+
+            // Update status tombol aktif
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+        }
+
+        // Logika Mini Game Tebak Angpao
+        function playGame(choice) {
+            const resultText = document.getElementById('game-result');
+            // Acak pemenang (1, 2, atau 3)
+            const winningNumber = Math.floor(Math.random() * 3) + 1;
+
+            if (choice === winningNumber) {
+                resultText.innerHTML = "✨ SELAMAT! Isinya: 'Kasih Sayang Tak Terhingga' ❤️";
+                resultText.style.color = "#2e7d32"; // Hijau
+            } else {
+                resultText.innerHTML = "Zonk! Coba lagi ya 😜";
+                resultText.style.color = "#c62828"; // Merah
+            }
+        }
+    </script>
+</body>
+</html>
