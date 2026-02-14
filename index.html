@@ -39,7 +39,6 @@
             width: 90%;
             position: relative;
             z-index: 2; 
-            /* Transparansi agar background blur terlihat sedikit */
             background: rgba(232, 241, 255, 0.85);
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255,255,255,0.4);
@@ -91,7 +90,7 @@
 
         /* --- Section Styles & Background Blurs --- */
         section {
-            display: none; /* Hidden by default */
+            display: none;
             animation: fadeIn 0.5s ease-in-out;
             padding-top: 50px;
             padding-bottom: 120px;
@@ -113,27 +112,16 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background-size: cover;
             background-position: center;
-            filter: blur(8px) brightness(0.8); /* Efek blur dan agak gelap */
-            transform: scale(1.1); /* Zoom sedikit agar pinggiran blur tidak putih */
+            filter: blur(8px) brightness(0.8); 
+            transform: scale(1.1); 
             z-index: 0;
         }
 
         /* --- PENGATURAN BACKGROUND PER HALAMAN --- */
-        
-        /* Page 1: Background Polos (Default) */
-        #page1::before { background: var(--bg-color); } 
-
-        /* Page 2: Background Laptop (Blur) */
-        #page2::before { 
-            /* 🔴 GANTI: Nama file gambar Laptop background di sini */
-            background-image: url('assets/LaptopBelajar.png'); 
-        }
-
-        /* Page 3: Background Lampion (Blur) */
-        #page3::before { 
-            /* 🔴 GANTI: Nama file gambar Lampion background di sini */
-            background-image: url('assets/Lampion.png'); 
-        }
+        #page1::before { background-image: url('assets/Lampion.png'); } 
+        #page2::before { background-image: url('assets/valentineBackground.png'); }
+        #page3::before { background-image: url('assets/imlekBackground.png'); }
+        #page4::before { background-image: url('assets/LaptopBelajar.png'); }
 
         @keyframes fadeIn {
             from { opacity: 0; } to { opacity: 1; }
@@ -143,31 +131,32 @@
         .game-buttons {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
             margin-top: 20px;
         }
 
-        /* Tombol Pilihan Gambar */
         .choice-btn-img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 3px solid white;
-            background-color: var(--primary-pink);
+            width: 80px;   
+            height: 110px;
+            background-color: transparent;
             cursor: pointer;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
             transition: transform 0.2s;
             padding: 0;
-            overflow: hidden; 
+            border: none;
+            overflow: visible;
         }
         
         .choice-btn-img img {
             width: 100%;
             height: 100%;
-            object-fit: cover; 
+            object-fit: contain;
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.2));
         }
 
-        .choice-btn-img:hover { transform: translateY(-5px) scale(1.05); }
+        .choice-btn-img:hover img { 
+            filter: drop-shadow(7px 7px 15px rgba(0,0,0,0.25));
+        }
+        .choice-btn-img:hover { transform: translateY(-5px); }
         .choice-btn-img:active { transform: scale(0.95); }
 
         #game-result {
@@ -188,28 +177,51 @@
             box-shadow: inset 0 0 10px rgba(255,207,232, 0.5);
             font-size: 1.1rem;
         }
+
+        /* --- 🔴 STYLE BARU: Floating Hearts --- */
+        .heart-container {
+            position: absolute;
+            bottom: -50px;
+            pointer-events: none; /* Agar tidak menghalangi klik */
+            z-index: 10; /* Di atas segalanya */
+            animation: floatUp 5s linear forwards;
+        }
+
+        .heart-icon {
+            font-size: 24px;
+            display: block;
+            animation: sway 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-110vh); opacity: 0; }
+        }
+
+        @keyframes sway {
+            0% { transform: translateX(-15px) rotate(-10deg); }
+            100% { transform: translateX(15px) rotate(10deg); }
+        }
+
     </style>
 </head>
 <body>
 
     <section id="page1" class="active">
         <div class="clay-card">
-            <h2>🧧 Tebak Angpao</h2>
-            <p>Mana angpao yang berisi pesan spesial untukmu?</p>
-            
-            <img src="assets/AngpaoUtama.png" alt="Tiga Angpao Clay 3D" class="hero-image-inner">
-            
+            <h2>🧧 Pilih Angpao</h2>
+            <p>Mau pilih yang mana dulu nih?</p>
             <div class="game-buttons">
-                <button class="choice-btn-img" onclick="playGame(1)">
+                <button class="choice-btn-img" onclick="showPage(2, this)">
                     <img src="assets/choice1.png" alt="Pilihan 1">
                 </button>
-
-                <button class="choice-btn-img" onclick="playGame(2)">
+                <button class="choice-btn-img" onclick="showPage(3, this)">
                      <img src="assets/choice2.png" alt="Pilihan 2">
                 </button>
-
-                <button class="choice-btn-img" onclick="playGame(3)">
-                     <img src="assets/choice13.png" alt="Pilihan 3">
+                <button class="choice-btn-img" onclick="showPage(4, this)">
+                     <img src="assets/choice3.png" alt="Pilihan 3">
                 </button>
             </div>
             <p id="game-result">Klik salah satu angpao di atas!</p>
@@ -218,36 +230,47 @@
 
     <section id="page2">
         <div class="clay-card">
-            <h2>🎓 Focus Mode</h2>
-            <p>Bayangkan suasana tenang ini menemanimu menyelesaikan bab demi bab.</p>
-            
-            <div class="quote-box">
-                "Skripsi itu bukan tentang siapa yang paling pintar, tapi siapa yang paling konsisten. Tarik napas, lanjut ngetik!"
-            </div>
+            <p>❤️ Happy Valentine! ❤️</p>
             <br>
-            <p>Kamu sudah sejauh ini. Jangan berhenti sekarang. ✨</p>
+            <p>To the most important person ever...</p>
+            <p>Don't let anyone else's negative thoughts dim your light (Including me). Keep being the sunshine in my life and in the lives of everyone around you. 🌞</p>
+            <p>I will always be here to support you, no matter what</p>
+            <br>
+            <p style="color: var(--accent-red); font-weight: bold; font-size: 1.2rem;">So please, raise your head up! Don't be down</p>
         </div>
     </section>
 
     <section id="page3">
         <div class="clay-card">
-            <h2>🏮 Gong Xi Fa Cai &<br>Happy Valentine 💖</h2>
-            
-            <p>Di bawah cahaya lampion yang hangat ini...</p>
+            <h2>🏮 Gong Xi Fa Cai 🏮</h2>
+            <p>Below this warm lantern...</p>
             <br>
-            <p>Semoga tahun ini membawa kemakmuran yang melimpah, dan kasih sayang yang manis seperti coklat favoritmu.</p>
+            <p>May this year bring abundant prosperity, as abundant as my love to you 🐊.</p>
             <br>
             <p style="color: var(--accent-red); font-weight: bold; font-size: 1.2rem;">Sending you lots of Luck & Love!</p>
         </div>
     </section>
 
+    <section id="page4">
+        <div class="clay-card">
+            <h2>🎓 Focus Mode</h2>
+            <p><b>Hello, Calon S.Psi.</b></p>
+            <div class="quote-box">
+                "Goodluck on your journey to becoming a psychologist! Remember, every step you take is a step towards making a positive impact on people's lives. Stay focused, stay passionate, and never forget why you started. You've got this! 💪📚"
+            </div>
+            <br>
+            <p>You're already on the right path. Keep going! 🚀</p>
+        </div>
+    </section>
+
     <div class="nav-bar">
-        <button class="nav-btn active" onclick="showPage(1, this)">Game 🧧</button>
-        <button class="nav-btn" onclick="showPage(2, this)">Study 🎓</button>
-        <button class="nav-btn" onclick="showPage(3, this)">Wish 🏮</button>
+        <button class="nav-btn active" onclick="showPage(1, this)">Back 🧧</button>
     </div>
 
     <script>
+        // Variabel untuk interval hati
+        let heartInterval;
+
         // --- Logika Navigasi ---
         function showPage(pageId, btnElement) {
             // Sembunyikan semua section
@@ -259,35 +282,82 @@
             const selectedSection = document.getElementById('page' + pageId);
             selectedSection.classList.add('active');
 
-            // Update tombol navigasi aktif
+            // Update tombol navigasi
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            btnElement.classList.add('active');
+            if(btnElement) btnElement.classList.add('active');
             
+            // 🔴 LOGIKA START/STOP HATI 🔴
+            // Hentikan pembuatan hati jika pindah halaman
+            stopFloatingHearts();
+
+            // Jika masuk ke Page 2, mulai hujan hati
+            if (pageId === 2) {
+                startFloatingHearts();
+            }
+
             // Reset text game jika kembali ke halaman 1
             if(pageId === 1) {
                  const res = document.getElementById('game-result');
-                 res.innerHTML = "Klik salah satu angpao di atas!";
-                 res.style.color = "var(--accent-red)";
+                 if(res) {
+                    res.innerHTML = "Klik salah satu angpao di atas!";
+                    res.style.color = "var(--accent-red)";
+                 }
             }
+        }
+
+        // --- Logika Floating Hearts (Hati Melayang) ---
+        function createHeart() {
+            const section = document.getElementById('page2');
+            // Cek jika section page2 tidak aktif, jangan buat hati (double check)
+            if (!section.classList.contains('active')) return;
+
+            // Buat container hati
+            const heartContainer = document.createElement('div');
+            heartContainer.classList.add('heart-container');
+            
+            // Random posisi horizontal (0% - 90%)
+            heartContainer.style.left = Math.random() * 90 + '%';
+            
+            // Random ukuran (0.5 - 1.5 kali lipat)
+            const size = Math.random() * 1 + 0.5;
+            
+            // Random durasi (3s - 6s)
+            const duration = Math.random() * 3 + 3;
+            heartContainer.style.animationDuration = duration + 's';
+
+            // Buat icon hati di dalam container
+            const heartIcon = document.createElement('span');
+            heartIcon.classList.add('heart-icon');
+            heartIcon.innerHTML = '❤️'; // Bisa diganti '💖', '💗', dll
+            heartIcon.style.fontSize = (24 * size) + 'px';
+            
+            // Random delay animasi sway agar tidak seragam
+            heartIcon.style.animationDelay = Math.random() * 2 + 's';
+
+            heartContainer.appendChild(heartIcon);
+            section.appendChild(heartContainer);
+
+            // Hapus elemen setelah animasi selesai (misal 6 detik)
+            setTimeout(() => {
+                heartContainer.remove();
+            }, duration * 1000);
+        }
+
+        function startFloatingHearts() {
+            // Buat hati setiap 400ms
+            heartInterval = setInterval(createHeart, 400);
+        }
+
+        function stopFloatingHearts() {
+            clearInterval(heartInterval);
+            // Opsional: Hapus sisa hati yang masih ada saat pindah halaman
+            const hearts = document.querySelectorAll('.heart-container');
+            hearts.forEach(h => h.remove());
         }
 
         // --- Logika Mini Game ---
-        let winningNumber = Math.floor(Math.random() * 3) + 1; // Acak pemenang saat load
+        let winningNumber = Math.floor(Math.random() * 3) + 1; 
 
-        function playGame(choice) {
-            const resultText = document.getElementById('game-result');
-            
-            if (choice === winningNumber) {
-                resultText.innerHTML = "✨ YAY! Isinya: 'Semangat & Cinta Bertubi-tubi'! ❤️";
-                resultText.style.color = "#2e7d32"; // Hijau
-                // Acak ulang untuk permainan berikutnya setelah 1 detik
-                setTimeout(() => { winningNumber = Math.floor(Math.random() * 3) + 1; }, 2000);
-            } else {
-                const responses = ["Zonk! Kosong nih 😜", "Coba pilih yang lain! 🤔", "Belum beruntung, lagi!"];
-                resultText.innerHTML = responses[Math.floor(Math.random() * responses.length)];
-                resultText.style.color = "#c62828"; // Merah
-            }
-        }
     </script>
 </body>
 </html>
