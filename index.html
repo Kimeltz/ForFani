@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine & Imlek 3D Celebration</title>
+    <title>Valentine & Imlek Celebration</title>
     <style>
         :root {
             /* Palette Warna Pastel */
             --bg-color: #dbeafe; /* Biru Pastel Terang */
-            --card-bg: #e8f1ff;  /* Variasi Biru untuk Clay */
+            --card-bg: #e8f1ff;  /* Variasi Biru */
             --primary-pink: #fbcfe8; /* Pink Pastel */
             --accent-red: #9f4a4a;   /* Merah Gelap Pastel */
             --text-color: #5d6d7e;
@@ -117,7 +117,7 @@
             z-index: 0;
         }
 
-        /* --- PENGATURAN BACKGROUND PER HALAMAN --- */
+        /* --- BACKGROUNDS --- */
         #page1::before { background-image: url('assets/Lampion.png'); } 
         #page2::before { background-image: url('assets/valentineBackground.png'); }
         #page3::before { background-image: url('assets/imlekBackground.png'); }
@@ -127,7 +127,6 @@
             from { opacity: 0; } to { opacity: 1; }
         }
 
-        /* --- Page 1: Game Styles --- */
         .game-buttons {
             display: flex;
             justify-content: center;
@@ -166,7 +165,7 @@
             color: var(--accent-red);
         }
 
-        /* --- Page 2: Motivasi Styles --- */
+
         .quote-box {
             font-style: italic;
             color: #555;
@@ -178,12 +177,12 @@
             font-size: 1.1rem;
         }
 
-        /* --- 🔴 STYLE BARU: Floating Hearts --- */
+
         .heart-container {
             position: absolute;
             bottom: -50px;
-            pointer-events: none; /* Agar tidak menghalangi klik */
-            z-index: 10; /* Di atas segalanya */
+            pointer-events: none; 
+            z-index: 10; 
             animation: floatUp 5s linear forwards;
         }
 
@@ -293,7 +292,7 @@
     </div>
 
     <script>
-        // Variabel untuk interval hati
+        // Variabel interval hati
         let heartInterval;
 
         // --- Logika Navigasi ---
@@ -311,8 +310,7 @@
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             if(btnElement) btnElement.classList.add('active');
             
-            // 🔴 LOGIKA START/STOP HATI 🔴
-            // Hentikan pembuatan hati jika pindah halaman
+            // Stop hati jika pindah halaman
             stopFloatingHearts();
 
             // Jika masuk ke Page 2, mulai hujan hati
