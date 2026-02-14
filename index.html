@@ -13,7 +13,6 @@
             --accent-red: #9f4a4a;   /* Merah Gelap Pastel (seperti Angpao) */
             --text-color: #5d6d7e;
             --shadow-light: inset 6px 6px 10px rgba(255, 255, 255, 0.7), inset -6px -6px 10px rgba(0, 0, 0, 0.05), 8px 8px 16px rgba(166, 180, 200, 0.4);
-            --shadow-pressed: inset 4px 4px 8px rgba(166, 180, 200, 0.4), inset -4px -4px 8px rgba(255, 255, 255, 0.8);
         }
 
         body {
@@ -34,10 +33,10 @@
             border-radius: 30px;
             box-shadow: 20px 20px 60px #b8c6db, -20px -20px 60px #ffffff;
             padding: 2rem;
-            margin: 1rem;
+            margin: 1rem auto; /* Center horizontally */
             text-align: center;
             max-width: 400px;
-            width: 90%;
+            width: 85%; /* Slightly smaller width for mobile */
             transition: all 0.3s ease;
             position: relative;
         }
@@ -51,52 +50,63 @@
             line-height: 1.6;
         }
 
-        /* Gambar Utama */
+        /* Gambar Utama di setiap halaman */
         .hero-image {
             width: 100%;
-            border-radius: 20px;
+            height: auto;
+            border-radius: 25px; /* Lebih bulat */
             margin-bottom: 1.5rem;
-            box-shadow: var(--shadow-light);
-            border: 4px solid #fff;
+            /* Efek timbul untuk gambar utama */
+            box-shadow: 8px 8px 20px rgba(184, 198, 219, 0.6), -8px -8px 20px rgba(255, 255, 255, 1);
+            border: 5px solid rgba(255, 255, 255, 0.5);
         }
 
         /* Navigasi Bawah */
         .nav-bar {
             position: fixed;
-            bottom: 20px;
+            bottom: 25px;
             display: flex;
-            gap: 15px;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            padding: 15px 25px;
+            gap: 12px;
+            background: rgba(232, 241, 255, 0.8); /* Sedikit lebih buram menyesuaikan tema clay */
+            backdrop-filter: blur(15px);
+            padding: 12px 20px;
             border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(184, 198, 219, 0.5);
             z-index: 100;
+            border: 2px solid rgba(255, 255, 255, 0.6);
         }
 
         .nav-btn {
             border: none;
             background: var(--primary-pink);
             color: var(--accent-red);
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 12px 24px;
+            border-radius: 25px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
-            transition: transform 0.1s;
+            /* Clay button style */
+            box-shadow: 6px 6px 12px rgba(166, 180, 200, 0.5), inset 2px 2px 5px rgba(255, 255, 255, 0.8);
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+             transform: translateY(-3px);
         }
 
         .nav-btn:active, .nav-btn.active {
-            transform: scale(0.95);
+            transform: scale(0.95) translateY(0);
             background: var(--accent-red);
             color: white;
+            /* Pressed clay effect */
+            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.2), inset -4px -4px 8px rgba(255, 255, 255, 0.3);
         }
 
         /* Halaman (Sections) */
         section {
             display: none; /* Hidden by default */
-            animation: fadeIn 0.5s ease-in-out;
-            padding-bottom: 100px; /* Space for navbar */
+            animation: fadeIn 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); /* Lebih smooth */
+            padding-bottom: 120px; /* More space for navbar */
+            padding-top: 30px;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -108,59 +118,93 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* Page 1: Game Angpao */
+        /* --- GAYA KHUSUS HALAMAN 1 (GAME TOMBOL GAMBAR) --- */
         .game-buttons {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 15px; /* Jarak antar tombol gambar */
+            margin-top: 20px;
+            flex-wrap: wrap; /* Agar responsif di layar kecil */
         }
 
-        .choice-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+        /* Container tombol gambar */
+        .choice-btn-img {
+            background: transparent;
             border: none;
-            background-color: var(--accent-red);
-            color: white;
-            font-size: 1.2rem;
+            padding: 0;
             cursor: pointer;
-            box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy effect */
+            position: relative;
         }
-        
-        .choice-btn:hover {
-            transform: translateY(-3px);
+
+        /* Styling gambar di dalam tombol */
+        .choice-btn-img img {
+            width: 90px;  /* Ukuran default */
+            height: 90px; /* Ukuran default */
+            object-fit: cover; /* Agar gambar tidak gepeng */
+            border-radius: 20px; /* Sudut membulat */
+            border: 4px solid #fff; /* Bingkai putih tebal */
+            /* Efek bayangan 3D timbul */
+            box-shadow: 8px 8px 15px rgba(184, 198, 219, 0.8), -4px -4px 10px rgba(255, 255, 255, 1);
+        }
+
+        .choice-btn-img:hover {
+            transform: scale(1.1) rotate(3deg); /* Efek hover membesar dan sedikit miring */
+            z-index: 10;
+        }
+
+        .choice-btn-img:active img {
+             /* Efek ditekan */
+             box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.2), inset -4px -4px 8px rgba(255, 255, 255, 0.3);
+             transform: scale(0.95);
         }
 
         #game-result {
-            margin-top: 15px;
+            margin-top: 25px;
             font-weight: bold;
-            min-height: 24px;
+            min-height: 28px;
             color: var(--accent-red);
+            font-size: 1.1rem;
+            padding: 10px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.5);
         }
 
         /* Page 2: Motivasi */
         .quote-box {
             font-style: italic;
-            color: #555;
-            background: #fff;
-            padding: 15px;
-            border-radius: 15px;
-            margin-top: -30px; /* Overlap effect */
+            color: #666;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            padding: 20px;
+            border-radius: 20px;
+            margin-top: -40px; /* Overlap effect yang lebih kuat */
             z-index: 10;
             position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            width: 80%;
+            box-shadow: 10px 10px 30px #d1d9e6, -10px -10px 30px #ffffff;
+            width: 85%;
+            border: 3px solid #fff;
         }
 
         /* Page 3: Kartu Ucapan */
         .greeting-card {
-            background: linear-gradient(145deg, #ffffff, #e6e6e6);
-            border: 2px solid var(--primary-pink);
+             background: var(--card-bg);
+             border: 4px solid var(--primary-pink);
+        }
+        
+        /* Responsif untuk layar kecil */
+        @media (max-width: 380px) {
+            .choice-btn-img img {
+                width: 70px;
+                height: 70px;
+            }
+            .nav-btn {
+                padding: 10px 18px;
+                font-size: 0.9rem;
+            }
         }
 
     </style>
@@ -169,40 +213,51 @@
 
     <section id="page1" class="active">
         <div class="clay-card">
-            <h2>🧧 Tebak Isi Angpao</h2>
-            <p>Pilih salah satu angpao di bawah ini. Jika beruntung, kamu akan mendapatkan pesan spesial!</p>
+            <h2>🧧 Tebak Keberuntunganmu</h2>
+            <p>Pilih salah satu item di bawah ini untuk membuka pesan rahasia!</p>
             
-            <img src="Gemini_Generated_Image_6tyqn16tyqn16tyq.jpg" alt="Tiga Angpao Clay 3D" class="hero-image">
+            <img src="assets/main_angpao_placeholder.jpg" alt="Tiga Angpao Clay 3D" class="hero-image">
             
             <div class="game-buttons">
-                <button class="choice-btn" onclick="playGame(1)">1</button>
-                <button class="choice-btn" onclick="playGame(2)">2</button>
-                <button class="choice-btn" onclick="playGame(3)">3</button>
+                <button class="choice-btn-img" onclick="playGame(1)">
+                    <img src="assets/choice1_placeholder.png" alt="Pilihan 1">
+                </button>
+
+                <button class="choice-btn-img" onclick="playGame(2)">
+                     <img src="assets/choice2_placeholder.png" alt="Pilihan 2">
+                </button>
+
+                <button class="choice-btn-img" onclick="playGame(3)">
+                     <img src="assets/choice3_placeholder.png" alt="Pilihan 3">
+                </button>
             </div>
-            <p id="game-result">Klik nomor untuk memilih!</p>
+            
+            <p id="game-result">Klik gambar untuk memilih!</p>
         </div>
     </section>
 
     <section id="page2">
         <div class="clay-card">
-            <h2>🎓 Semangat Skripsian!</h2>
-            <img src="Gemini_Generated_Image_d2l6l2d2l6l2d2l6.jpg" alt="Meja Belajar Clay 3D" class="hero-image">
+            <h2>🎓 Zona Semangat Skripsi</h2>
+            
+            <img src="assets/study_laptop_placeholder.jpg" alt="Meja Belajar Clay 3D" class="hero-image">
             
             <div class="quote-box">
-                "Revisian itu tanda sayang dosen pembimbing. Lelah boleh, nyerah jangan. Toga sudah menunggu!"
+                "Skripsi yang baik adalah skripsi yang selesai. Tarik napas, kerjakan satu paragraf, lalu apresiasi dirimu."
             </div>
             <br>
-            <p>Tarik napas, minum kopi, dan tulis satu paragraf lagi hari ini.</p>
+            <p>Istirahat itu perlu, tapi jangan lupa kembali berjuang. Toga menantimu!</p>
         </div>
     </section>
 
     <section id="page3">
         <div class="clay-card greeting-card">
-            <h2>🏮 Gong Xi Fa Cai &<br>Happy Valentine 💖</h2>
-            <img src="Gemini_Generated_Image_gzhihngzhihngzhi.jpg" alt="Lampion Clay 3D" class="hero-image">
+            <h2>🏮 Double Celebration 💖<br>Happy CNY & Valentine</h2>
             
-            <p>Semoga tahun ini penuh dengan keberuntungan, kemakmuran, dan kasih sayang yang manis seperti coklat.</p>
-            <p style="color: var(--accent-red); font-weight: bold;">Love & Luck, Always.</p>
+            <img src="assets/lantern_placeholder.jpg" alt="Lampion Clay 3D" class="hero-image">
+            
+            <p>Semoga tahun Naga Kayu ini membawa kemakmuran yang melimpah dan hatimu dipenuhi kasih sayang yang tulus.</p>
+            <p style="color: var(--accent-red); font-weight: bold; margin-top: 15px;">Best Wishes for You! ✨</p>
         </div>
     </section>
 
@@ -213,38 +268,39 @@
     </div>
 
     <script>
-        // Logika Navigasi Halaman
+        // Logika Navigasi Halaman (Tidak Berubah)
         function showPage(pageId, btnElement) {
-            // Sembunyikan semua section
             document.querySelectorAll('section').forEach(sec => {
                 sec.classList.remove('active');
                 sec.style.display = 'none';
             });
             
-            // Tampilkan section yang dipilih
             const selectedSection = document.getElementById('page' + pageId);
             selectedSection.style.display = 'flex';
-            // Sedikit delay untuk memicu animasi CSS
             setTimeout(() => selectedSection.classList.add('active'), 10);
 
-            // Update status tombol aktif
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             btnElement.classList.add('active');
         }
 
-        // Logika Mini Game Tebak Angpao
+        // Logika Mini Game (Tidak Berubah)
         function playGame(choice) {
             const resultText = document.getElementById('game-result');
-            // Acak pemenang (1, 2, atau 3)
-            const winningNumber = Math.floor(Math.random() * 3) + 1;
-
-            if (choice === winningNumber) {
-                resultText.innerHTML = "✨ SELAMAT! Isinya: 'Kasih Sayang Tak Terhingga' ❤️";
-                resultText.style.color = "#2e7d32"; // Hijau
-            } else {
-                resultText.innerHTML = "Zonk! Coba lagi ya 😜";
-                resultText.style.color = "#c62828"; // Merah
-            }
+            resultText.style.opacity = 0; // Efek fade out sebentar
+            
+            setTimeout(() => {
+                const winningNumber = Math.floor(Math.random() * 3) + 1;
+                if (choice === winningNumber) {
+                    resultText.innerHTML = "🎉 YAY! Kamu dapat pesan: 'Rejeki & Cinta Lancar Jaya!' ❤️";
+                    resultText.style.color = "#2e7d32"; 
+                    resultText.style.background = "#e8f5e9";
+                } else {
+                    resultText.innerHTML = "Coba lagi! Keberuntunganmu ada di pilihan lain 😜";
+                    resultText.style.color = "#c62828"; 
+                    resultText.style.background = "#ffebee";
+                }
+                 resultText.style.opacity = 1; // Fade in hasil
+            }, 200);
         }
     </script>
 </body>
